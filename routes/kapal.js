@@ -56,13 +56,12 @@ router.post('/store', async function(req, res, next) {
     }
 });
 
-// Route untuk menampilkan form edit kapal berdasarkan ID
 router.get('/edit/:id', async function(req, res, next) {
     try {
         let id = req.params.id;
         let kapal = await Model_Kapal.getById(id);
         res.render('kapal/edit', { 
-            id_kapal: kapal[0].id_kapal,
+            id: id, // Menambahkan variabel id ke dalam objek konteks
             nama_kapal: kapal[0].nama_kapal,
             id_dpi: kapal[0].id_dpi,
             id_alat_kapal: kapal[0].id_alat_kapal,

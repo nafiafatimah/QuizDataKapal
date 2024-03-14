@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-form {
+            margin-top: 50px; 
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto; /* Mengaktifkan horizontal scrolling */
+        }
+        .table-responsive {
+            overflow-x: auto; /* Mengaktifkan horizontal scrolling untuk tabel */
+            margin-bottom: 15px; /* Memberikan jarak antara tabel dan tombol */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <% if (messages.success) { %>
+            <div class="alert alert-info" role="alert">
+                <%- messages.success %>
+            </div>
+        <% } %>
+        <div class="row justify-content-center">
+            <div class="col-md-10 custom-form"> 
+                <a href="/kapal/create" class="btn btn-sm btn-success mb-3">Tambah Kapal</a>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nama Kapal</th>
+                                <th scope="col">Nama Pemilik</th>
+                                <th scope="col">ID DPI</th>
+                                <th scope="col">ID Alat Kapal</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.forEach(function(kapal) { %>
+                                <tr>
+                                    <td><%= kapal.id_kapal %></td>
+                                    <td><%= kapal.nama_kapal %></td>
+                                    <td><%= kapal.id_pemilik %></td>
+                                    <td><%= kapal.id_dpi %></td>
+                                    <td><%= kapal.id_alat_kapal %></td>
+                                    <td>
+                                        <a href="/kapal/edit/<%= kapal.id_kapal %>" class="btn btn-warning">Edit</a>
+                                        <a href="/kapal/delete/<%= kapal.id_kapal %>" class="btn btn-danger">Hapus</a>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

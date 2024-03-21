@@ -18,7 +18,7 @@ router.get('/', async function(req, res, next){
 router.get('/create', function(req, res, next){
     res.render('pemilik/create', { 
         id_pemilik: '',
-        nama_kapal: '',
+        nama_pemilik: '',
         alamat: '',
         no_hp: ''
     });
@@ -28,14 +28,14 @@ router.post('/store', async function(req, res, next){
     try {
         let {
             id_pemilik,
-            nama_kapal,
+            nama_pemilik,
             alamat,
             no_hp
         } = req.body;
         
         let Data = { 
             id_pemilik,
-            nama_kapal,
+            nama_pemilik,
             alamat,
             no_hp
         };
@@ -56,7 +56,7 @@ router.get('/edit/:id', async function(req, res, next) {
         let rows = await Model_Pemilik.getById(id);
         res.render('pemilik/edit', { 
             id_pemilik: rows[0].id_pemilik,
-            nama_kapal: rows[0].nama_kapal,
+            nama_pemilik: rows[0].nama_pemilik,
             alamat: rows[0].alamat,
             no_hp: rows[0].no_hp
         });
@@ -70,13 +70,13 @@ router.post('/update/:id',async function(req, res, next){
     try {
         let id = req.params.id;
         let {
-            nama_kapal,
+            nama_pemilik,
             alamat,
             no_hp
         } = req.body;
         
         let Data = {
-            nama_kapal,
+            nama_pemilik,
             alamat,
             no_hp
         };

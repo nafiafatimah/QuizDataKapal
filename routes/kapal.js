@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Model_Kapal = require('../model/model_kapal');
+const Model_DPI = require('../model/model_dpi');
+const Model_Pemilik = require('../model/model_pemilik');
+const Model_Alat_Tangkap = require('../model/model_alat_tangkap');
 
 // Route untuk menampilkan semua data kapal
 router.get('/', async function(req, res, next) {
@@ -17,14 +20,21 @@ router.get('/', async function(req, res, next) {
 });
 
 // Route untuk menampilkan form tambah kapal
-router.get('/create', function(req, res, next) {
-    res.render('kapal/create', { 
-        id_kapal: '',
-        nama_kapal: '',
-        id_dpi: '',
-        id_alat_kapal: '',
-        id_pemilik: ''
-    });
+router.get('/create', async function (req, res, next) {
+    try {
+        let pemilik = await Model_Pemilik.getAll();
+        let dpi = await Model_DPI.getAll();
+        let alat_tangkap = await Model_Alat_Tangkap.getAll();
+        res.render('kapal/create', {
+            dataPemilik: pemilik,
+            dataDPI: dpi,
+            dataAlatTangkap: alat_tangkap
+        });
+    } catch (error) {
+        console.log(error);
+        req.flash('error', 'Terjadi kesalahan pada server');
+        res.redirect('/kapal');
+    }
 });
 
 // Route untuk menambahkan data kapal
@@ -56,22 +66,23 @@ router.post('/store', async function(req, res, next) {
     }
 });
 
-router.get('/edit/:id', async function(req, res, next) {
-    try {
-        let id = req.params.id;
-        let kapal = await Model_Kapal.getById(id);
-        res.render('kapal/edit', { 
-            id: id, // Menambahkan variabel id ke dalam objek konteks
-            nama_kapal: kapal[0].nama_kapal,
-            id_dpi: kapal[0].id_dpi,
-            id_alat_kapal: kapal[0].id_alat_kapal,
-            id_pemilik: kapal[0].id_pemilik
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
-    }
-});
+router.get('/edit/(:id)', async function (req, res, next) {
+    let id = req.params.id;
+    let pemilik = await Model_Pemilik.getAll();
+    let dpi = await Model_DPI.getAll();
+    let alat_tangkap = await Model_Alat_Tangkap.getAll();
+    let rows = await Model_Kapal.getId(id);
+    res.render('kapal/edit', {
+        id: rows[0].id_kapal,
+        nama_kapal: rows[0].nama_kapal,
+        id_pemilik: rows[0].id_pemilik,
+        id_alat_kapal: rows[0].id_alat_kapal,
+        id_dpi: rows[0].id_dpi,
+        data_pemilik: pemilik,
+        data_dpi: dpi,
+        data_alat_tangkap: alat_tangkap,
+    })
+})
 
 // Route untuk menyimpan perubahan pada data kapal berdasarkan ID
 router.post('/update/:id', async function(req, res, next) {

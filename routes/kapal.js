@@ -31,7 +31,7 @@ router.get('/create', async function (req, res, next) {
             dataAlatTangkap: alat_tangkap
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         req.flash('error', 'Terjadi kesalahan pada server');
         res.redirect('/kapal');
     }
@@ -41,18 +41,16 @@ router.get('/create', async function (req, res, next) {
 router.post('/store', async function(req, res, next) {
     try {
         let {
-            id_kapal,
             nama_kapal,
             id_dpi,
-            id_alat_kapal,
+            id_alat_tangkap,
             id_pemilik
         } = req.body;
         
         let Data = { 
-            id_kapal,
             nama_kapal,
             id_dpi,
-            id_alat_kapal,
+            id_alat_tangkap,
             id_pemilik
         };
         
@@ -66,23 +64,26 @@ router.post('/store', async function(req, res, next) {
     }
 });
 
-router.get('/edit/(:id)', async function (req, res, next) {
-    let id = req.params.id;
-    let pemilik = await Model_Pemilik.getAll();
-    let dpi = await Model_DPI.getAll();
-    let alat_tangkap = await Model_Alat_Tangkap.getAll();
-    let rows = await Model_Kapal.getId(id);
-    res.render('kapal/edit', {
-        id: rows[0].id_kapal,
-        nama_kapal: rows[0].nama_kapal,
-        id_pemilik: rows[0].id_pemilik,
-        id_alat_kapal: rows[0].id_alat_kapal,
-        id_dpi: rows[0].id_dpi,
-        data_pemilik: pemilik,
-        data_dpi: dpi,
-        data_alat_tangkap: alat_tangkap,
-    })
-})
+// Route untuk menampilkan form edit kapal
+router.get('/edit/:id', async function (req, res, next) {
+    try {
+        let id = req.params.id;
+        let pemilik = await Model_Pemilik.getAll();
+        let dpi = await Model_DPI.getAll();
+        let alat_tangkap = await Model_Alat_Tangkap.getAll();
+        let rows = await Model_Kapal.getById(id);
+        res.render('kapal/edit', {
+            data: rows[0],
+            dataPemilik: pemilik,
+            dataDPI: dpi,
+            dataAlatTangkap: alat_tangkap
+        });
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Terjadi kesalahan pada server');
+        res.redirect('/kapal');
+    }
+});
 
 // Route untuk menyimpan perubahan pada data kapal berdasarkan ID
 router.post('/update/:id', async function(req, res, next) {
@@ -91,18 +92,18 @@ router.post('/update/:id', async function(req, res, next) {
         let {
             nama_kapal,
             id_dpi,
-            id_alat_kapal,
+            id_alat_tangkap,
             id_pemilik
         } = req.body;
         
-        let Data = {
+        let data = {
             nama_kapal,
             id_dpi,
-            id_alat_kapal,
+            id_alat_tangkap,
             id_pemilik
         };
         
-        await Model_Kapal.Update(id, Data); 
+        await Model_Kapal.Update(id, data); 
         req.flash('success', 'Berhasil menyimpan perubahan data kapal');
         res.redirect('/kapal');
     } catch (error) {

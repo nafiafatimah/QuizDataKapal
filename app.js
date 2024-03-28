@@ -13,6 +13,7 @@ var kapalRouter = require('./routes/kapal');
 var dpiRouter = require('./routes/dpi');
 var pemilikRouter = require('./routes/pemilik');
 var alattangkapRouter = require('./routes/alat_tangkap');
+var superuserRouter = require('./routes/superuser');
 
 var app = express();
 
@@ -48,6 +49,7 @@ app.use('/kapal', kapalRouter);
 app.use('/dpi', dpiRouter);
 app.use('/pemilik', pemilikRouter);
 app.use('/alat_tangkap', alattangkapRouter);
+app.use('/superusers', superuserRouter );
 app.use('/static', express.static(path.join(__dirname, 'public/')));
 
 // catch 404 and forward to error handler

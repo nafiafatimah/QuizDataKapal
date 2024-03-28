@@ -3,61 +3,51 @@
 <%- include("../partials/sidebar") %>
 <%- include("../partials/topbar") %>
 
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Dashboard</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <a href="/kapal/create" >
-                            <div class="fas fa-table me-1">
-                                
-                            </div>
-                        </a>
-                        <i  class="">Tambah Kapal</i> 
-                    </div>
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <a href="/kapal/create">
+                        <div class="fas fa-table me-1"></div>
+                    </a>
+                    <i class="">Tambah Kapal</i>
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nama Kapal</th>
+                                <th scope="col">Nama Pemilik</th>
+                                <th scope="col">Nama DPI</th>
+                                <th scope="col">Nama Alat Kapal</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.forEach(function(kapal) { %>
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nama Kapal</th>
-                                    <th scope="col">Nama Pemilik</th>
-                                    <th scope="col">Nama DPI</th>
-                                    <th scope="col">Nama Alat Kapal</th>
-                                    <th scope="col">Aksi</th>
+                                    <td><%= kapal.id_kapal %></td>
+                                    <td><%= kapal.nama_kapal %></td>
+                                    <td><%= kapal.Nama_pemilik %></td>
+                                    <td><%= kapal.Nama_dpi %></td>
+                                    <td><%= kapal.Nama_alat_tangkap %></td>
+                                    <td>
+                                        <a href="/kapal/edit/<%= kapal.id_kapal %>" class="btn btn-warning">Edit</a>
+                                        <a href="/kapal/delete/<%= kapal.id_kapal %>" class="btn btn-danger">Hapus</a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <% data.forEach(function(kapal) { %>
-                                    <tr>
-                                        <td><%= kapal.id_kapal %></td>
-                                        <td><%= kapal.nama_kapal %></td>
-                                        <td><%= kapal.nama_pemilik %></td>
-                                        <td><%= kapal.nama_dpi %></td>
-                                        <td><%= kapal.nama_alat_tangkap %></td>
-                                        <td>
-                                            <a href="/kapal/edit/<%= kapal.id_kapal %>" class="btn btn-warning">Edit</a>
-                                            <a href="/kapal/delete/<%= kapal.id_kapal %>" class="btn btn-danger">Hapus</a>
-                                        </td>
-                                    </tr>
-                                <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div> 
-
-
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-
-
-
-        <%- include("../partials/footer") %>
-
-
-
+    <%- include("../partials/footer") %>

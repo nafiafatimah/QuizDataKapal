@@ -2,42 +2,46 @@
 <%- include("../partials/sidebar") %>
 <%- include("../partials/topbar") %>
 
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Dashboard</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-                <h2>Edit Kapal</h2>
-                <form action="/kapal/update/<%= id %>" method="POST">
-                    <div class="form-group">
-                        <label for="nama_kapal">Nama Kapal</label>
-                        <input type="text" class="form-control" id="nama_kapal" name="nama_kapal" value="<%= nama_kapal %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_dpi">ID DPI</label>
-                        <input type="number" class="form-control" id="id_dpi" name="id_dpi" value="<%= id_dpi %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_alat_kapal">ID Alat Kapal</label>
-                        <input type="number" class="form-control" id="id_alat_kapal" name="id_alat_kapal" value="<%= id_alat_kapal %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_pemilik">ID Alat Kapal</label>
-                        <input type="number" class="form-control" id="id_pemilik" name="id_pemilik" value="<%= id_pemilik %>" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                </form>
-            </div>
-        </main>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <h2>Edit Kapal</h2>
+            <form action="/kapal/update/<%= data.id %>" method="POST">
+                <div class="form-group">
+                    <label for="nama_kapal">Nama Kapal</label>
+                    <input type="text" class="form-control" id="nama_kapal" name="nama_kapal" value="<%= data.nama_kapal %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_dpi">DPI</label>
+                    <select class="form-select" id="id_dpi" name="id_dpi" required>
+                        <% dataDPI.forEach(function(dpi) { %>
+                            <option value="<%= dpi.Id_dpi %>" <%= dpi.Id_dpi == data.id_dpi ? 'selected' : '' %>><%= dpi.nama_dpi %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_alat_tangkap">Alat Tangkap</label>
+                    <select class="form-select" id="id_alat_tangkap" name="id_alat_tangkap" required>
+                        <% dataAlatTangkap.forEach(function(alat) { %>
+                            <option value="<%= alat.Id_alat_tangkap %>" <%= alat.Id_alat_tangkap == data.id_alat_tangkap ? 'selected' : '' %>><%= alat.nama_alat_tangkap %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_pemilik">Pemilik</label>
+                    <select class="form-select" id="id_pemilik" name="id_pemilik" required>
+                        <% dataPemilik.forEach(function(pemilik) { %>
+                            <option value="<%= pemilik.Id_pemilik %>" <%= pemilik.Id_pemilik == data.id_pemilik ? 'selected' : '' %>><%= pemilik.Nama_pemilik %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            </form>
+        </div>
+    </main>
 
-
-
-
-        <%- include("../partials/footer") %>
-
-
-
-
-
+<%- include("../partials/footer") %>

@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', async function(req, res, next) {
     try {
         let id = req.session.userId;
-        let Data = await Model_Users.getAll();
+        let Data = await Model_Users.getById(id);
         if (Data.length > 0) {
             // Pengecekan level
             if (Data[0].level_users != 2) {
@@ -24,5 +24,6 @@ router.get('/', async function(req, res, next) {
         res.status(501).json("Butuh akses login");
     }
 });
+
 
 module.exports = router;

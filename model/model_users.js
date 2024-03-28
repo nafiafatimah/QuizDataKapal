@@ -43,7 +43,7 @@ class Model_Users {
     // Method untuk mengambil data berdasarkan ID dari tabel Users.
     static async getById(id) {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM users WHERE id_users = ?', id, (err, rows) => {
+            connection.query('SELECT * FROM users WHERE id_users = ?', [id], (err, rows) => {
                 if (err) {
                     reject(err);
                 } else {

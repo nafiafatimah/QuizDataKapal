@@ -42,19 +42,6 @@
                                 </tr>
                                 <% } %>
                             </tbody>
-                                <% for(var i = 0; i < data.length; i++){ %>
-                                <tr>
-                                    <th scope="row"><%= (i+1) %></th>
-                                    <td><%= data[i].nama_pemilik %></td>
-                                    <td><%= data[i].alamat %></td>
-                                    <td><%= data[i].no_hp %></td>
-                                    <td>
-                                        <a href="/pemilik/edit/<%= data[i].id_pemilik %>" class="btn btn-sm btn-warning">Edit</a>
-                                        <a href="/pemilik/delete/<%= data[i].id_pemilik %>" class="btn btn-sm btn-danger">Delete</a>
-                                    </td>
-                                </tr>
-                                <% } %>
-                            </tbody>
                         </table>
                     </div>
                 </div> 
